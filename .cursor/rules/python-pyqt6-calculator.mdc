@@ -1,0 +1,384 @@
+---
+description: Python PyQt6 Calculator - KISS, TDD, ISP principles enforced
+globs: **/*.py
+alwaysApply: false
+---
+
+# Python PyQt6 Calculator Development Rules
+
+## Core Principles
+
+### KISS - Keep It Simple, Stupid
+- **No over-engineering**: Use simple Python data structures (dict, list, primitives)
+- **No unnecessary patterns**: Avoid complex state machines, observer patterns, factories unless absolutely needed
+- **Readable > Clever**: Write code that's easy to understand, not impressively compact
+- **Minimal dependencies**: Only use PyQt6 for UI, no additional frameworks
+
+```python
+# ❌ BAD - Over-engineered
+class CalculatorStateFactory:
+    @staticmethod
+    def create_state(state_type: StateType) -> AbstractState:
+        ...
+
+# ✅ GOOD - Simple and direct
+class CalculatorState:
+    def __init__(self):
+        self.current_value = "0"
+        self.operator = None
+```
+
+### TDD - Test-Driven Development
+**MANDATORY WORKFLOW:**
+1. **RED**: Write failing test first
+2. **GREEN**: Write minimal code to pass
+3. **REFACTOR**: Clean up while keeping tests green
+
+```python
+# STEP 1: Write test FIRST (tests/test_calculator_engine.py)
+def test_add_two_numbers():
+    engine = CalculatorEngine()
+    result = engine.add(2, 3)
+    assert result == 5
+
+# STEP 2: Run test (should fail)
+# $ pytest tests/test_calculator_engine.py::test_add_two_numbers
+
+# STEP 3: Implement minimal code (src/calculator_engine.py)
+class CalculatorEngine:
+    def add(self, a: float, b: float) -> float:
+        return a + b
+
+# STEP 4: Run test (should pass)
+# STEP 5: Refactor if needed
+```
+
+**Rules:**
+- **Never** write implementation code before the test
+- **Always** run tests before committing
+- **Coverage target**: 85% minimum, 100% for business logic
+- **Test file naming**: `test_*.py` matches `*.py` in src
+
+### ISP - Interface Segregation Principle
+**Split interfaces by responsibility:**
+
+```python
+# ❌ BAD - Fat interface (violates ISP)
+class ICalculator:
+    def add(self, a, b): pass
+    def format_display(self, value): pass
+    def handle_button_click(self): pass
+    def show_window(self): pass
+    # Too many responsibilities!
+
+# ✅ GOOD - Segregated interfaces
+class ICalculatorEngine:
+    """Pure calculation logic"""
+    def add(self, a: float, b: float) -> float: pass
+    def subtract(self, a: float, b: float) -> float: pass
+
+class IDisplayFormatter:
+    """Number formatting only"""
+    def format_number(self, value: float) -> str: pass
+
+class ICalculatorState:
+    """State management only"""
+    def input_digit(self, digit: str) -> None: pass
+    def get_display_value(self) -> str: pass
+```
+
+**Implementation Rules:**
+- One interface per file
+- Interfaces have 3-7 methods maximum
+- Clear, focused responsibility
+- No UI code in business logic classes
+
+## PyQt6 Best Practices
+
+### Separation of Concerns
+```python
+# ❌ BAD - Business logic in UI
+class CalculatorWindow(QWidget):
+    def on_add_clicked(self):
+        result = float(self.display.text()) + self.pending_value
+        self.display.setText(str(result))
+
+# ✅ GOOD - UI delegates to state
+class CalculatorWindow(QWidget):
+    def __init__(self, state: CalculatorState):
+        self.state = state
+    
+    def on_add_clicked(self):
+        self.state.input_operator('+')
+        self.update_display()
+```
+
+### Signal/Slot Pattern
+```python
+# ✅ Connect button signals to handlers
+self.button_7.clicked.connect(lambda: self.on_digit_clicked('7'))
+
+# ✅ Custom signals for communication
+class DisplayWidget(QWidget):
+    value_changed = pyqtSignal(str)
+    
+    def set_value(self, value: str):
+        self.label.setText(value)
+        self.value_changed.emit(value)
+```
+
+### Styling with QSS
+```python
+# ✅ Centralize styles
+class CalculatorStyles:
+    BUTTON_OPERATOR = """
+        QPushButton {
+            background-color: #FF9F0A;
+            color: #FFFFFF;
+            border-radius: 28px;
+        }
+        QPushButton:hover {
+            opacity: 0.85;
+        }
+    """
+
+# ✅ Apply in widget
+button.setStyleSheet(CalculatorStyles.BUTTON_OPERATOR)
+```
+
+## Project Structure Requirements
+
+### Directory Layout
+```
+calculator/
+├── src/
+│   ├── calculator_engine.py      # Pure logic (NO PyQt6 imports)
+│   ├── display_formatter.py      # Pure formatting (NO PyQt6 imports)
+│   ├── calculator_state.py       # State management (NO PyQt6 imports)
+│   └── ui/
+│       ├── calculator_window.py  # Main window (PyQt6 OK here)
+│       ├── display_widget.py     # Display widget
+│       ├── button_widget.py      # Custom button
+│       └── styles.py             # QSS styles
+├── tests/
+│   └── test_*.py                 # Mirror src structure
+```
+
+### Import Rules
+```python
+# ❌ BAD - PyQt6 in business logic
+# File: src/calculator_engine.py
+from PyQt6.QtCore import QObject  # NEVER!
+
+# ✅ GOOD - Business logic is UI-agnostic
+# File: src/calculator_engine.py
+from typing import Protocol
+
+class ICalculatorEngine(Protocol):
+    def add(self, a: float, b: float) -> float: ...
+
+# ✅ GOOD - PyQt6 only in UI layer
+# File: src/ui/calculator_window.py
+from PyQt6.QtWidgets import QWidget
+from ..calculator_state import CalculatorState
+```
+
+## Type Hints
+
+**Always use type hints:**
+```python
+# ✅ Function signatures
+def add(self, a: float, b: float) -> float:
+    return a + b
+
+# ✅ Class attributes
+class CalculatorState:
+    current_value: str
+    operator: Optional[str]
+    
+    def __init__(self):
+        self.current_value = "0"
+        self.operator = None
+
+# ✅ Function parameters
+def format_number(self, value: float, max_digits: int = 9) -> str:
+    ...
+```
+
+## Testing Standards
+
+### Test File Structure
+```python
+"""Test calculator engine operations."""
+import pytest
+from src.calculator_engine import CalculatorEngine
+
+class TestBasicOperations:
+    """Test basic arithmetic operations."""
+    
+    @pytest.fixture
+    def engine(self):
+        """Provide fresh calculator engine for each test."""
+        return CalculatorEngine()
+    
+    def test_add_positive_numbers(self, engine):
+        assert engine.add(2, 3) == 5
+    
+    def test_add_negative_numbers(self, engine):
+        assert engine.add(-2, -3) == -5
+
+class TestEdgeCases:
+    """Test edge cases and error conditions."""
+    
+    def test_divide_by_zero_raises_error(self):
+        engine = CalculatorEngine()
+        with pytest.raises(ZeroDivisionError):
+            engine.divide(10, 0)
+```
+
+### UI Testing with pytest-qt
+```python
+def test_button_click_updates_display(qtbot):
+    """Test that clicking button 5 updates display to '5'."""
+    state = CalculatorState()
+    window = CalculatorWindow(state)
+    qtbot.addWidget(window)
+    
+    # Click button 5
+    qtbot.mouseClick(window.button_5, Qt.MouseButton.LeftButton)
+    
+    # Verify display updated
+    assert window.display.get_value() == "5"
+```
+
+## Code Quality
+
+### No Magic Numbers
+```python
+# ❌ BAD
+button.setFixedSize(56, 56)
+
+# ✅ GOOD
+BUTTON_SIZE = 56
+button.setFixedSize(BUTTON_SIZE, BUTTON_SIZE)
+```
+
+### Explicit is Better Than Implicit
+```python
+# ❌ BAD
+def calculate(a, b, op):
+    return eval(f"{a}{op}{b}")  # NEVER use eval!
+
+# ✅ GOOD
+def calculate(self, left: float, right: float, operator: str) -> float:
+    if operator == '+':
+        return self.add(left, right)
+    elif operator == '-':
+        return self.subtract(left, right)
+    # ... explicit handling
+```
+
+### Error Handling
+```python
+# ✅ Handle specific exceptions
+def divide(self, a: float, b: float) -> float:
+    if b == 0:
+        raise ZeroDivisionError("Cannot divide by zero")
+    return a / b
+
+# ✅ In UI layer, show user-friendly messages
+def on_equals_clicked(self):
+    try:
+        result = self.state.calculate()
+        self.display.set_value(result)
+    except ZeroDivisionError:
+        self.display.set_value("Error")
+```
+
+## Documentation
+
+### Docstrings
+```python
+def format_number(self, value: float, max_digits: int = 9) -> str:
+    """Format number for display with comma separators.
+    
+    Args:
+        value: The number to format
+        max_digits: Maximum digits before scientific notation (default: 9)
+    
+    Returns:
+        Formatted string (e.g., "1,234.56")
+    
+    Example:
+        >>> formatter.format_number(1234.5)
+        "1,234.5"
+    """
+```
+
+### Comments
+```python
+# ✅ GOOD - Explain WHY, not WHAT
+# Convert to percentage by dividing by 100 (macOS calculator behavior)
+value = value / 100
+
+# ❌ BAD - Obvious comment
+# Divide value by 100
+value = value / 100
+```
+
+## Git Commit Messages
+
+**Format:** `<type>: <description>`
+
+**Types:**
+- `test:` Add or modify tests
+- `feat:` Add feature
+- `fix:` Fix bug
+- `refactor:` Code restructuring
+- `style:` Formatting, styling
+- `docs:` Documentation
+
+```bash
+# ✅ GOOD commits (TDD workflow)
+git commit -m "test: add test for calculator addition"
+git commit -m "feat: implement calculator addition"
+git commit -m "refactor: extract operation logic to separate method"
+
+# ❌ BAD commits
+git commit -m "fixed stuff"
+git commit -m "WIP"
+```
+
+## Pre-Commit Checklist
+
+Before every commit:
+- [ ] All tests pass: `pytest`
+- [ ] Coverage meets target: `pytest --cov=src`
+- [ ] No linter errors: `pylint src/`
+- [ ] Type hints present
+- [ ] Docstrings for public methods
+- [ ] No PyQt6 imports in business logic
+- [ ] Following TDD cycle (test first!)
+
+## Running Tests
+
+```bash
+# Run all tests
+pytest
+
+# Run specific test file
+pytest tests/test_calculator_engine.py
+
+# Run with coverage
+pytest --cov=src --cov-report=html
+
+# Run tests on file change
+pytest-watch
+
+# Run verbose
+pytest -v
+```
+
+---
+
+**Remember:** Simple, tested, segregated. If you're about to write complex code, stop and simplify first.
