@@ -1,6 +1,6 @@
 # Build Real Software in One Hour (Even If You've Never Coded)
 
-Watch two videos. Use four prompts. Build a working app.
+Watch two videos. Use four prompts. Build a working calculator app.
 
 No experience needed. Let's go.
 
@@ -12,7 +12,11 @@ No experience needed. Let's go.
 
 This video shows how to install Cursor IDE. Pause and do each step.
 
-**Come back when Cursor is installed and ready.**
+**After Video 1:**
+- Open Cursor IDE
+- Take a screenshot of your system calculator (or use the image provided)
+- Start a new project
+- Ready for Video 2
 
 ---
 
@@ -20,32 +24,41 @@ This video shows how to install Cursor IDE. Pause and do each step.
 
 **Watch and code along:** https://www.loom.com/share/8e0e2f44b9784612ae38600002b85039
 
-This video walks through using all four prompts to build the calculator:
-- Prompt 1: Write specifications
-- Prompt 2: Create implementation plan  
-- Prompt 3: Set up environment
-- Prompt 4: Build the application
+This video walks through using all four prompts to build a working calculator. Type each prompt as shown and follow along.
 
-**Code along with the video. Pause when needed.**
+**After Video 2:**
+- You'll have a working calculator app
+- Test it - click buttons, do calculations
+- You just built real software!
 
 ---
 
-## The Four Prompts
+## The Four Prompts (As Used in the Video)
 
-**Prompt 1:**
+### Prompt 1: Specification Writer
+**What it does:** Analyzes your screenshot and creates detailed specifications (colors, sizes, button layout, functionality).
+
 ```
-You are a specification writer. Write detailed specifications for <what you want>. 
-Write it markdown in the root folder.
+You are a specification writer. Write detailed specifications for a pixel-perfect 
+representation of this calculator screenshot. Write it markdown in the root folder.
 ```
 
-**Prompt 2:**
+Attach your calculator screenshot. This creates `CALCULATOR_SPEC.md` with every detail documented.
+
+### Prompt 2: Software Architect  
+**What it does:** Reads the specs and creates a complete implementation plan with phases, testing strategy, and file structure.
+
 ```
 You are a software architect. Let us read the specifications, and let us create an 
-implementation plan where we use <tech>, utilize TDD and ISP, do not overcomplicate. 
-Write the implementation plan as a markdown.
+implementation plan where we use Python with PyQt6 for the UI, utilize TDD and ISP, 
+do not overcomplicate. Write the implementation plan as a markdown.
 ```
 
-**Prompt 3:**
+This creates `IMPLEMENTATION_PLAN.md` with your step-by-step build roadmap.
+
+### Prompt 3: Environment Setup
+**What it does:** Installs all dependencies (Python, PyQt6, testing tools) and creates Cursor rules to enforce best practices.
+
 ```
 Please now look at the implementation plan and make sure that we have everything 
 installed on this computer that we need in order to run this successfully. Install 
@@ -55,15 +68,38 @@ for the technology that we're going to implement this in. Enforce KISS, TDD, ISP
 this cursor rules file.
 ```
 
-**Prompt 4:**
+This sets up your entire development environment automatically.
+
+### Prompt 4: Joyful Developer
+**What it does:** Builds the entire calculator application following the plan, writing tests first, then implementing features.
+
 ```
 We're the happiest and most joyful software developer in the universe. Let us now 
 implement the plan as specified by the software architect make sure we follow the 
 rules of the cursor rules file, but do it with the utmost joy.
 ```
 
-Replace `<what you want>` with your project idea.
-Replace `<tech>` with your technology choice.
+This creates all the code files and builds your working calculator.
+
+---
+
+## Use These Prompts for ANY Project
+
+The four prompts work for any software project. Just change what you're building:
+
+**For different projects, modify Prompts 1 and 2:**
+
+**Prompt 1:** Replace "calculator screenshot" with:
+- "a todo list app with categories and due dates"  
+- "a simple budgeting tool to track expenses"
+- "a note-taking app with markdown support"
+
+**Prompt 2:** Replace "Python with PyQt6" with:
+- "Node.js with Express and React" (web app)
+- "Python with FastAPI" (REST API)
+- "Rust with a CLI interface" (command-line tool)
+
+**Prompts 3 and 4:** Use exactly as written for any project.
 
 ---
 
