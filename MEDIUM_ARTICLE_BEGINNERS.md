@@ -10,46 +10,21 @@ No experience needed. Let's go.
 
 **Watch and follow along:** https://www.loom.com/share/b6e2d33d3df54aa1b57deefea90fe0c1
 
-This installs Cursor IDE and gets you ready. Pause and do each step.
+This video shows how to install Cursor IDE. Pause and do each step.
 
-**Come back when Cursor is installed.**
-
----
-
-## Your First Two Prompts (10 minutes)
-
-Open Cursor. Start a chat. Use these two prompts exactly as shown in the video:
-
-### Prompt 1
-```
-You are a specification writer. Write detailed specifications for <what you want>. 
-Write it markdown in the root folder.
-```
-
-For the calculator: Replace `<what you want>` with "a pixel-perfect representation of this calculator screenshot" and attach your screenshot.
-
-Press Enter. Watch AI create your spec document.
-
-### Prompt 2
-```
-You are a software architect. Let us read the specifications, and let us create an 
-implementation plan where we use <tech>, utilize TDD and ISP, do not overcomplicate. 
-Write the implementation plan as a markdown.
-```
-
-For the calculator: Replace `<tech>` with "Python with PyQt6 for the UI".
-
-Press Enter. Watch AI create your build plan.
-
-**You now have specs and a plan. Let's build it.**
+**Come back when Cursor is installed and ready.**
 
 ---
 
-## Video 2: Build Your App (45 minutes)
+## Video 2: Build Your Calculator with Four Prompts (45 minutes)
 
 **Watch and code along:** https://www.loom.com/share/8e0e2f44b9784612ae38600002b85039
 
-This video shows you using Prompts 3 and 4 to build the complete application.
+This video walks through using all four prompts to build the calculator:
+- Prompt 1: Write specifications
+- Prompt 2: Create implementation plan  
+- Prompt 3: Set up environment
+- Prompt 4: Build the application
 
 **Code along with the video. Pause when needed.**
 
@@ -57,7 +32,7 @@ This video shows you using Prompts 3 and 4 to build the complete application.
 
 ## The Four Prompts (Use for ANY Project)
 
-Here are the prompts explained generically:
+Here are the prompts shown in the video, explained generically so you can use them for any project:
 
 ### Prompt 1: Specification Writer
 ```
@@ -66,7 +41,7 @@ Write it markdown in the root folder.
 ```
 
 Replace `<what you want>` with:
-- "a pixel-perfect calculator matching this screenshot" (attach screenshot)
+- "a pixel-perfect calculator matching this screenshot" (attach screenshot) ← *video example*
 - "a todo list app with categories and due dates"
 - "a simple budgeting tool to track monthly expenses"
 - "a note-taking app with search and tags"
@@ -80,7 +55,7 @@ Write the implementation plan as a markdown.
 ```
 
 Replace `<tech>` with:
-- "Python with PyQt6 for the UI" (desktop app)
+- "Python with PyQt6 for the UI" ← *video example*
 - "Node.js with Express and React" (web app)
 - "Python with FastAPI" (REST API)
 - "Rust with a CLI interface" (command-line tool)
@@ -159,10 +134,9 @@ Explains:
 
 ## Start Now
 
-1. Watch Video 1
-2. Use Prompts 1 & 2
-3. Watch Video 2 
-4. Build something
+1. Watch Video 1 (install)
+2. Watch Video 2 (build)
+3. Build your own project
 
 Then build whatever you want.
 
