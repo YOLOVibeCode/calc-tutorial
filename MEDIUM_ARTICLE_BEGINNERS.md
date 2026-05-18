@@ -30,37 +30,22 @@ This video walks through using all four prompts to build the calculator:
 
 ---
 
-## The Four Prompts (Use for ANY Project)
+## The Four Prompts
 
-Here are the prompts shown in the video, explained generically so you can use them for any project:
-
-### Prompt 1: Specification Writer
+**Prompt 1:**
 ```
 You are a specification writer. Write detailed specifications for <what you want>. 
 Write it markdown in the root folder.
 ```
 
-Replace `<what you want>` with:
-- "a pixel-perfect calculator matching this screenshot" (attach screenshot) ← *video example*
-- "a todo list app with categories and due dates"
-- "a simple budgeting tool to track monthly expenses"
-- "a note-taking app with search and tags"
-- **Your idea here**
-
-### Prompt 2: Software Architect
+**Prompt 2:**
 ```
 You are a software architect. Let us read the specifications, and let us create an 
 implementation plan where we use <tech>, utilize TDD and ISP, do not overcomplicate. 
 Write the implementation plan as a markdown.
 ```
 
-Replace `<tech>` with:
-- "Python with PyQt6 for the UI" ← *video example*
-- "Node.js with Express and React" (web app)
-- "Python with FastAPI" (REST API)
-- "Rust with a CLI interface" (command-line tool)
-
-### Prompt 3: Environment Setup
+**Prompt 3:**
 ```
 Please now look at the implementation plan and make sure that we have everything 
 installed on this computer that we need in order to run this successfully. Install 
@@ -70,16 +55,15 @@ for the technology that we're going to implement this in. Enforce KISS, TDD, ISP
 this cursor rules file.
 ```
 
-Use exactly as written. No changes needed.
-
-### Prompt 4: Build It
+**Prompt 4:**
 ```
 We're the happiest and most joyful software developer in the universe. Let us now 
 implement the plan as specified by the software architect make sure we follow the 
 rules of the cursor rules file, but do it with the utmost joy.
 ```
 
-Use exactly as written. No changes needed.
+Replace `<what you want>` with your project idea.
+Replace `<tech>` with your technology choice.
 
 ---
 
