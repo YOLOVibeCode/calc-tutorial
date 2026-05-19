@@ -10,11 +10,14 @@ No experience needed. Let's go.
 
 **Watch and follow along:** https://www.loom.com/share/b6e2d33d3df54aa1b57deefea90fe0c1
 
-This video shows how to install Cursor IDE. Pause and do each step.
+This video shows how to install Cursor IDE.
 
 **After Video 1:**
-- Open Cursor IDE
-- Ready for Video 2
+1. Open Cursor IDE
+2. Take a screenshot of your system calculator:
+   - **Windows:** Press `Win + Shift + S`, select area, save image
+   - **Mac:** Press `Cmd + Shift + 4`, click and drag, image saves to desktop
+3. Keep the screenshot ready - you'll need it in Video 2
 
 ---
 
@@ -22,11 +25,9 @@ This video shows how to install Cursor IDE. Pause and do each step.
 
 **Watch and code along:** https://www.loom.com/share/8e0e2f44b9784612ae38600002b85039
 
-This video walks through using all four prompts to build a working calculator. Type each prompt as shown and follow along.
+This video walks through using all four prompts to build a working calculator. You'll use the screenshot from Step 2 above.
 
 **After Video 2:**
-- Take a screenshot of your system calculator (or use the image provided in video)
-- Start a new project in Cursor
 - You'll have a working calculator app
 - Test it - click buttons, do calculations
 - You just built real software!
