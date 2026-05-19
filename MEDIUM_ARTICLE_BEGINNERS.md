@@ -14,8 +14,6 @@ This video shows how to install Cursor IDE. Pause and do each step.
 
 **After Video 1:**
 - Open Cursor IDE
-- Take a screenshot of your system calculator (or use the image provided)
-- Start a new project
 - Ready for Video 2
 
 ---
@@ -27,6 +25,8 @@ This video shows how to install Cursor IDE. Pause and do each step.
 This video walks through using all four prompts to build a working calculator. Type each prompt as shown and follow along.
 
 **After Video 2:**
+- Take a screenshot of your system calculator (or use the image provided in video)
+- Start a new project in Cursor
 - You'll have a working calculator app
 - Test it - click buttons, do calculations
 - You just built real software!
